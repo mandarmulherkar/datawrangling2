@@ -17,7 +17,6 @@ When you click the **Knit** button a document will be generated that includes bo
 
 ```{r cars}
 library(dplyr)
-library(rjson)
 ```
 
 ## Setting up the data frame.
@@ -25,7 +24,25 @@ library(rjson)
 Using the file from springboard:
 
 ```{r pressure, echo=FALSE}
-original_titanic <- read.csv("titanic_original.csv")
+original_titanic <- read.csv("titanic_original.csv", header = TRUE, sep = ",")
+View(original_titanic)
+
+## Checking the missing values in the embarked column.
+summary(original_titanic$embarked)
+```
+
+
+```{r pressure, echo=FALSE}
+# original_titanic$embarked[is.na(original_titanic$embarked)] <- "S"
+# original_titanic$embarked[is.null(original_titanic$embarked)] <- "S"
+
+find_missing <- function(x) {
+  if (is.null(x)) {
+    x <- 'S'
+  }
+}
+original_titanic$embarked <- lapply(original_titanic$embarked, find_missing)
+View(original_titanic)
 ```
 
 Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.

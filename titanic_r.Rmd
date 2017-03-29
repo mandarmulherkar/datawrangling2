@@ -43,6 +43,7 @@ find_missing <- function(x) {
 }
 original_titanic$embarked <- lapply(original_titanic$embarked, find_missing)
 View(original_titanic)
+summary(original_titanic$embarked)
 ```
 
 Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.

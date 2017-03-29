@@ -22,16 +22,16 @@ library(dplyr)
 ## Setting up the data frame. Using the file from springboard
 
 ```{r}
-original_titanic <- read.csv("titanic_original.csv", header = TRUE, sep = ",")
+titanic <- read.csv("titanic_original.csv", header = TRUE, sep = ",")
 
 # Checking the missing values in the embarked column.
-summary(original_titanic$embarked)
+summary(titanic$embarked)
 ```
 
 
 ```{r}
 # embarked is a factor column.
-class(original_titanic$embarked)
+class(titanic$embarked)
 
 # Define function to replace the null values.
 find_missing <- function(x) {
@@ -43,34 +43,66 @@ find_missing <- function(x) {
 }
 
 # Apply the function.
-original_titanic$embarked <- lapply(original_titanic$embarked, find_missing)
+titanic$embarked <- lapply(titanic$embarked, find_missing)
 ```
 
 # Calculate the mean of the ages to fill in the missing values.
 # Think about other ways to calculate the missing values.
 ```{r}
-mean_age <- mean(original_titanic$age, na.rm = TRUE)
+mean_age <- mean(titanic$age, na.rm = TRUE)
 mean_age
-mean_trim_age <- mean(original_titanic$age, na.rm = TRUE, trim = 0.3)
+
+mean_trim_age <- mean(titanic$age, na.rm = TRUE, trim = 0.3)
 mean_trim_age
-median_age <- median(original_titanic$age, na.rm = TRUE)
+
+median_age <- median(titanic$age, na.rm = TRUE)
 median_age
-range_age <- range(original_titanic$age, na.rm = TRUE)
+
+range_age <- range(titanic$age, na.rm = TRUE)
 range_age
+
+sd_age <- sd(titanic$age, na.rm = TRUE)
+sd_age
 
 mode <- function(x) {
   ux <- na.omit(unique(x))
   ux[which.max(tabulate(match(x, ux)))]
 }
-mode_age <- mode(original_titanic$age)
+mode_age <- mode(titanic$age)
 mode_age
 ```
 
 # Use the mean age to fill in missing values.
 
 ```{r}
+# Summary before change.
+summary(titanic$age)
 
+titanic$age[is.na(titanic$age)] <- mean_age
+View(titanic)
+
+# Summary after change.
+summary(titanic$age)
 ```
 
+# Replace missing values in the boat column with NA (or None).
+
+```{r}
+# boat is a factor.
+str(titanic$boat)
+
+# Define function to replace the null values.
+find_missing_boats <- function(x) {
+  if (x == "") {
+    x <- as.character(NA)
+  } else {
+    as.character.factor(x)
+  }
+}
+
+# Apply the function.
+titanic$boat <- lapply(titanic$boat, find_missing_boats)
+View(titanic)
+```
 
 Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.

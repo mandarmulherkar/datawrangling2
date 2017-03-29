@@ -31,3 +31,9 @@ vignettes/*.pdf
 # Temporary files created by R markdown
 *.utf8.md
 *.knit.md
+
+# Initial commit
+.Rproj.user
+.Rhistory
+.RData
+.Ruserdata

@@ -236,8 +236,8 @@ titanic$cabin &lt;- lapply(titanic$cabin, find_missing_cabin)</code></pre>
 </div>
 <div id="you-have-a-hunch-that-the-fact-that-the-cabin-number-is-missing-might-be-a-useful-indicator-of-survival.-create-a-new-column-has_cabin_number-which-has-1-if-there-is-a-cabin-number-and-0-otherwise." class="section level1">
 <h1>You have a hunch that the fact that the cabin number is missing might be a useful indicator of survival. Create a new column has_cabin_number which has 1 if there is a cabin number, and 0 otherwise.</h1>
-<pre class="r"><code>titanic &lt;- titanic %&gt;% mutate(has_cabin_number = ifelse(is.na(titanic$cabin), 0, 1))
-head(titanic)</code></pre>
+<pre class="r"><code>titanic_clean &lt;- titanic %&gt;% mutate(has_cabin_number = ifelse(is.na(titanic$cabin), 0, 1))
+head(titanic_clean)</code></pre>
 <pre><code>##   pclass survived                                            name    sex
 ## 1      1        1                   Allen, Miss. Elisabeth Walton female
 ## 2      1        1                  Allison, Master. Hudson Trevor   male
@@ -259,6 +259,7 @@ head(titanic)</code></pre>
 ## 4 Montreal, PQ / Chesterville, ON                1
 ## 5 Montreal, PQ / Chesterville, ON                1
 ## 6                    New York, NY                1</code></pre>
+<pre class="r"><code>data.table::fwrite(titanic_clean, file =&quot;titanic_clean.csv&quot;, na = NA)</code></pre>
 <p>Note that the <code>echo = FALSE</code> parameter was added to the code chunk to prevent printing of the R code that generated the plot.</p>
 </div>
 

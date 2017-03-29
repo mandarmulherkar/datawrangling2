@@ -124,7 +124,9 @@ titanic$cabin <- lapply(titanic$cabin, find_missing_cabin)
 # You have a hunch that the fact that the cabin number is missing might be a useful indicator of survival. Create a new column has_cabin_number which has 1 if there is a cabin number, and 0 otherwise.
 
 ```{r}
-titanic <- titanic %>% mutate(has_cabin_number = ifelse(is.na(titanic$cabin), 0, 1))
-head(titanic)
+titanic_clean <- titanic %>% mutate(has_cabin_number = ifelse(is.na(titanic$cabin), 0, 1))
+head(titanic_clean)
+
+data.table::fwrite(titanic_clean, file ="titanic_clean.csv", na = NA)
 ```
 Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.

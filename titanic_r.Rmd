@@ -79,7 +79,6 @@ mode_age
 summary(titanic$age)
 
 titanic$age[is.na(titanic$age)] <- mean_age
-View(titanic)
 
 # Summary after change.
 summary(titanic$age)
@@ -102,7 +101,30 @@ find_missing_boats <- function(x) {
 
 # Apply the function.
 titanic$boat <- lapply(titanic$boat, find_missing_boats)
-View(titanic)
 ```
 
+# Add NA when missing cabin number.
+
+```{r}
+# Using the above replacement method for factor columns.
+
+# Define function to replace the null values.
+find_missing_cabin <- function(x) {
+  if (x == "") {
+    x <- as.character(NA)
+  } else {
+    as.character.factor(x)
+  }
+}
+
+# Apply the function.
+titanic$cabin <- lapply(titanic$cabin, find_missing_cabin)
+```
+
+# You have a hunch that the fact that the cabin number is missing might be a useful indicator of survival. Create a new column has_cabin_number which has 1 if there is a cabin number, and 0 otherwise.
+
+```{r}
+titanic <- titanic %>% mutate(has_cabin_number = ifelse(is.na(titanic$cabin), 0, 1))
+head(titanic)
+```
 Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.

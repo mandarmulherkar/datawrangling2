@@ -15,33 +15,35 @@ This is an R Markdown document. Markdown is a simple formatting syntax for autho
 
 When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
 
-```{r}
+```{r , echo=FALSE}
 library(dplyr)
 ```
 
-## Setting up the data frame.
-
-Using the file from springboard:
+## Setting up the data frame. Using the file from springboard
 
 ```{r}
 original_titanic <- read.csv("titanic_original.csv", header = TRUE, sep = ",")
 
-## Checking the missing values in the embarked column.
+# Checking the missing values in the embarked column.
 summary(original_titanic$embarked)
 ```
 
 
 ```{r}
-# original_titanic$embarked[is.na(original_titanic$embarked)] <- "S"
-# original_titanic$embarked[is.null(original_titanic$embarked)] <- "S"
+# embarked is a factor column.
+class(original_titanic$embarked)
 
+# Define function to replace the null values.
 find_missing <- function(x) {
-  if (is.null(x)) {
-    x <- 'S'
+  if (x == "") {
+    x <- as.character('S')
+  } else {
+    as.character.factor(x)
   }
 }
+
+# Apply the function.
 original_titanic$embarked <- lapply(original_titanic$embarked, find_missing)
-summary(original_titanic$embarked)
 ```
 
 Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.

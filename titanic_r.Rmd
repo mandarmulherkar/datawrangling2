@@ -46,4 +46,31 @@ find_missing <- function(x) {
 original_titanic$embarked <- lapply(original_titanic$embarked, find_missing)
 ```
 
+# Calculate the mean of the ages to fill in the missing values.
+# Think about other ways to calculate the missing values.
+```{r}
+mean_age <- mean(original_titanic$age, na.rm = TRUE)
+mean_age
+mean_trim_age <- mean(original_titanic$age, na.rm = TRUE, trim = 0.3)
+mean_trim_age
+median_age <- median(original_titanic$age, na.rm = TRUE)
+median_age
+range_age <- range(original_titanic$age, na.rm = TRUE)
+range_age
+
+mode <- function(x) {
+  ux <- na.omit(unique(x))
+  ux[which.max(tabulate(match(x, ux)))]
+}
+mode_age <- mode(original_titanic$age)
+mode_age
+```
+
+# Use the mean age to fill in missing values.
+
+```{r}
+
+```
+
+
 Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
